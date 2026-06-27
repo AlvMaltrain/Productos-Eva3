@@ -1,0 +1,30 @@
+
+services:
+  db-productos:
+    image: mysql:8.0
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: RootPass123
+      MYSQL_DATABASE: products_db
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pRootPass123"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  productos:
+    build: .
+    environment:
+      DB_HOST: db-productos
+      DB_PORT: "3306"
+      DB_USER: root
+      DB_PASSWORD: RootPass123
+      DB_NAME: products_db
+      PORT: "8082"
+    depends_on:
+      db-productos:
+        condition: service_healthy
+    ports:
+      - "8090:8082"
