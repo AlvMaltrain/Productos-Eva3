@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: productos-eva3
-  ECS_CLUSTER: devops-cluster
+  ECS_CLUSTER: devops-eva3-cluster
   ECS_SERVICE: productos-service
 
 jobs:
